@@ -1,5 +1,7 @@
 #include <SDL2/SDL.h>
+#include <SDL.h>
 #include <iostream>
+#include "traffic_simulation.hpp"
 
 int main(int argc, char* argv[])
 {
@@ -10,11 +12,11 @@ int main(int argc, char* argv[])
     }
 
     SDL_Window* window = SDL_CreateWindow(
-        "SDL2 Window",
+        "Traffic Simulation",
         SDL_WINDOWPOS_CENTERED,
         SDL_WINDOWPOS_CENTERED,
-        800,
-        600,
+        WINDOW_WIDTH,
+        WINDOW_HEIGHT,
         SDL_WINDOW_SHOWN
     );
 
@@ -26,8 +28,24 @@ int main(int argc, char* argv[])
     }
 
     SDL_Renderer* renderer = SDL_CreateRenderer(
-        window, -1, SDL_RENDERER_ACCELERATED
+        window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC
     );
+
+    if (!renderer) {
+        std::cout << "Renderer could not be created! SDL_Error: "
+                  << SDL_GetError() << std::endl;
+        SDL_DestroyWindow(window);
+        SDL_Quit();
+        return 1;
+    }
+
+    // Initialize traffic lights and statistics
+    TrafficLight lights[4];
+    Statistics stats = {};
+    Vehicle vehicles[MAX_VEHICLES] = {};
+    
+    initializeTrafficLights(lights);
+    stats.startTime = SDL_GetTicks();
 
     bool running = true;
     SDL_Event event;
@@ -38,8 +56,15 @@ int main(int argc, char* argv[])
                 running = false;
         }
 
-        SDL_SetRenderDrawColor(renderer, 0, 0, 255, 255);
+        // Update simulation
+        updateTrafficLights(lights);
+        
+        // Render
+        SDL_SetRenderDrawColor(renderer, 200, 200, 200, 255);
         SDL_RenderClear(renderer);
+        
+        renderSimulation(renderer, vehicles, lights, &stats);
+        
         SDL_RenderPresent(renderer);
     }
 
