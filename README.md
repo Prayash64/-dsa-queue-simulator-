@@ -6,7 +6,7 @@ Rollno: 15
 
 ## Traffic Junction Stimulation 
 
-This project simulates traffic movement at an intersection using C. The simulation models vehicle movement, traffic signals, and congestion patterns.
+This project simulates traffic movement at an intersection using C++. The simulation models vehicle movement, traffic signals, and congestion patterns.
 
 ## Program output 
 
@@ -58,7 +58,43 @@ MinGW (for Windows)
    
    Includes test files to validate correct behavior of queue operations.
 
-   ## Time Complexity
+   ##  Key Accomplishments
+
+- **Circular Logic:** Maximized memory efficiency by reusing space in the array after vehicles exit the queue.
+  
+- **High Performance:** Achieved **$O(1)$** time complexity for all core traffic operations.
+  
+- **Congestion Control:** Implemented logic to detect and prevent data overflow during peak traffic simulations.
+  
+- **OOP Design:** Built a modular system in C++ that separates data management from the user interface.
+  
+
+ ##  Data Structures Used in program 
+
+| Module / File | Data Structure | Purpose |
+|---------------|----------------|---------|
+| `Queue.hpp` | Queue (Abstract/Base) | Defines queue interface (FIFO) |
+| `Queue.cpp` | Queue Implementation | Implements enqueue/dequeue operations |
+| `LaneQueue.hpp` | Traffic Lane Queue | Specialized queue for lane vehicle ordering |
+| `vehicleQueue.hpp` | Vehicle Queue | Manages vehicles in a lane |
+| `vehicle.hpp` | Vehicle Object | Stores attributes of a vehicle |
+| `testqueue.cpp` | Queue Test Cases | Validates queue behavior |
+
+##  Functions Using Data Structures
+
+| Function | Returns | Data Structure | Purpose |
+|----------|---------|----------------|---------|
+| `enqueue(vehicle)` | void | Queue | Adds vehicle to queue |
+| `dequeue()` | Vehicle | Queue | Removes front vehicle |
+| `peek()` / `front()` | Vehicle | Queue | View next vehicle |
+| `isEmpty()` | bool | Queue | Check if empty |
+| `size()` | int | Queue | Count vehicles |
+| `display()` | void | Queue | Print all vehicles |
+| `processTraffic()` | void | Queue + Loop | Main traffic simulation logic |
+| `loadVehicles()` | void | Queue | Initialize traffic |
+
+
+  ## Time Complexity
 
 | **Operation / Algorithm Step**       | **Data Structure Used** | **Time Complexity** | **Explanation**                                                               |
 | ------------------------------------ | ----------------------- | ------------------- | ----------------------------------------------------------------------------- |
@@ -77,13 +113,14 @@ MinGW (for Windows)
 
 
 
+
 ## How it Works
 
 Program Components
 
 The simulation consists of two separate programs:
 
-Generator (generator.exe):
+A. Generator (generator.exe):
 
 1. Generates vehicles with random properties
 
@@ -91,7 +128,7 @@ Generator (generator.exe):
 
 3.  Spawns new vehicles every 500 milliseconds
 
-Main Simulation (main.exe):
+B. Main Simulation (main.exe):
 
 1. Reads vehicle data from the generator
    
@@ -116,26 +153,16 @@ d. Orange-Red: Fire trucks
 
 ## Code Structure
 
-1. main.c: Program entry point and main simulation loop
+1. main.c : Program entry point and main simulation loop
    
-2. traffic_simulation.h: Header file containing structs and function declarations
+2. traffic_simulation.h : Header file containing structs and function declarations
    
-3. traffic_simulation.c: Implementation of traffic simulation logic
+3. traffic_simulation.c : Implementation of traffic simulation logic
    
-4. generator.c: Vehicle generation logic
+4. generator.c : Vehicle generation logic
    
 
 
-##  Data Structures Used in program 
-
-| Module / File | Data Structure | Purpose |
-|---------------|----------------|---------|
-| `Queue.hpp` | Queue (Abstract/Base) | Defines queue interface (FIFO) |
-| `Queue.cpp` | Queue Implementation | Implements enqueue/dequeue operations |
-| `LaneQueue.hpp` | Traffic Lane Queue | Specialized queue for lane vehicle ordering |
-| `vehicleQueue.hpp` | Vehicle Queue | Manages vehicles in a lane |
-| `vehicle.hpp` | Vehicle Object | Stores attributes of a vehicle |
-| `testqueue.cpp` | Queue Test Cases | Validates queue behavior |
 
 
   ## Running the Simulation
@@ -154,51 +181,27 @@ d. Orange-Red: Fire trucks
   
 4. Use the close button (X) to exit the simulationControls 
 
-##  Functions Using Data Structures
-
-| Function | Returns | Data Structure | Purpose |
-|----------|---------|----------------|---------|
-| `enqueue(vehicle)` | void | Queue | Adds vehicle to queue |
-| `dequeue()` | Vehicle | Queue | Removes front vehicle |
-| `peek()` / `front()` | Vehicle | Queue | View next vehicle |
-| `isEmpty()` | bool | Queue | Check if empty |
-| `size()` | int | Queue | Count vehicles |
-| `display()` | void | Queue | Print all vehicles |
-| `processTraffic()` | void | Queue + Loop | Main traffic simulation logic |
-| `loadVehicles()` | void | Queue | Initialize traffic |
 
 ## 🚦 Algorithm for Traffic Processing
-Function processTraffic()
-
-while simulation not complete
-
-for each laneQueue
-
-if laneQueue is not empty
-
-frontVehicle = laneQueue.peek()
-
-if signal allows move
-
-laneQueue.dequeue()
-
-recordPassedVehicle(frontVehicle)
-
-end if
-
-end if
-
-end for
-
-updateSignals()
-
-displayState()
-
-end while
-
-end function
 
 
+The simulator follows a **Circular Queue Logic** to manage traffic flow:
+
+1. **Vehicle Arrival (Enqueue):** - New vehicles are added to the `rear` of the queue.
+   
+   - Circular logic: `rear = (rear + 1) % capacity`.
+     
+2. **Vehicle Departure (Dequeue):** - Vehicles exit from the `front` when the traffic signal is "Green".
+   
+   - Circular logic: `front = (front + 1) % capacity`.
+     
+3. **Overflow Management:** - If `(rear + 1) % capacity == front`, the system signals a traffic jam (Queue Full).
+   
+4. **Underflow Management:** - If `front == -1`, the lane is empty and no processing occurs.
+
+## Source Codes 
+
+Repository:  https://github.com/Prayash64/-dsa-queue-simulator-.git
 
 
 ## References
