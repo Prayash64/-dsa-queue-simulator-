@@ -24,7 +24,55 @@ GCC or G++ compiler
 SDL2 library
 MinGW (for Windows)
 
+## Features of the Queue Simulator
 
+1. Queue-Based Traffic Management
+
+   Uses the Queue data structure (FIFO) to simulate real-world traffic flow where vehicles are processed in the order they arrive.
+
+2. Vehicle Insertion and Removal
+   
+   Vehicles are added to the lane using enqueue() and removed using dequeue() when they pass the intersection.
+
+3. Multiple Lane Support
+   
+   Supports independent queues for different traffic lanes, allowing simultaneous processing of multiple traffic streams.
+
+4. Traffic Processing Algorithm
+   
+   Implements a loop-based algorithm that checks each lane and processes vehicles according to queue rules and traffic conditions.
+
+5. Efficient Operations
+   
+   Core queue operations like insertion, deletion, and front access are performed in constant time for better performance.
+
+6. Modular Design
+   
+   Separate files and classes are used for queues, vehicles, and lane logic, improving readability and maintainability.
+
+7. Simulation Visualization Support
+   
+   Includes demo visuals (demo.gif) and structural diagrams to help understand program flow.
+
+8. Testable Implementation
+   
+   Includes test files to validate correct behavior of queue operations.
+
+   ## Time Complexity
+
+| **Operation / Algorithm Step**       | **Data Structure Used** | **Time Complexity** | **Explanation**                                                               |
+| ------------------------------------ | ----------------------- | ------------------- | ----------------------------------------------------------------------------- |
+| `enqueue(vehicle)`                   | Queue                   | **O(1)**            | Vehicle is added directly to the rear of the queue without shifting elements. |
+| `dequeue()`                          | Queue                   | **O(1)**            | Front vehicle is removed in constant time.                                    |
+| `peek()` / `front()`                 | Queue                   | **O(1)**            | Accesses the front vehicle without removal.                                   |
+| `isEmpty()`                          | Queue                   | **O(1)**            | Simple condition check on queue state.                                        |
+| `size()`                             | Queue                   | **O(1)**            | Size is maintained as a variable in the queue.                                |
+| `display()`                          | Queue                   | **O(n)**            | Iterates through all vehicles in the queue to display them.                   |
+| Vehicle arrival processing           | Queue                   | **O(1)**            | Each arriving vehicle is enqueued once.                                       |
+| Vehicle departure processing         | Queue                   | **O(1)**            | Each vehicle exits using dequeue operation.                                   |
+| Processing one traffic lane per step | Queue                   | **O(1)**            | Only the front vehicle is checked and processed.                              |
+| Processing all lanes per step        | Multiple Queues         | **O(L)**            | Each lane queue is processed once per simulation step.                        |
+| Full traffic simulation              | Queues + Loop           | **O(T × L)**        | For `T` time steps and `L` lanes, each lane is processed per step.            |
 
 
 
@@ -76,16 +124,19 @@ d. Orange-Red: Fire trucks
    
 4. generator.c: Vehicle generation logic
    
-Data Structure used in program 
 
-## Data Structures Used
 
-| Data Structure | File(s) Used | Description |
-|---------------|-------------|-------------|
-| Queue | Queue.h | Implements basic FIFO queue |
-| VehicleQueue | VehicleQueue.h | Queue for storing vehicles |
-| LaneQueue | LaneQueue.h | Queue for managing lanes |
-| Vehicle | Vehicle.h | Stores vehicle information |
+##  Data Structures Used in program 
+
+| Module / File | Data Structure | Purpose |
+|---------------|----------------|---------|
+| `Queue.hpp` | Queue (Abstract/Base) | Defines queue interface (FIFO) |
+| `Queue.cpp` | Queue Implementation | Implements enqueue/dequeue operations |
+| `LaneQueue.hpp` | Traffic Lane Queue | Specialized queue for lane vehicle ordering |
+| `vehicleQueue.hpp` | Vehicle Queue | Manages vehicles in a lane |
+| `vehicle.hpp` | Vehicle Object | Stores attributes of a vehicle |
+| `testqueue.cpp` | Queue Test Cases | Validates queue behavior |
+
 
   ## Running the Simulation
 
@@ -102,6 +153,51 @@ Data Structure used in program
 3.   Watch as vehicles spawn and navigate through the intersection
   
 4. Use the close button (X) to exit the simulationControls 
+
+##  Functions Using Data Structures
+
+| Function | Returns | Data Structure | Purpose |
+|----------|---------|----------------|---------|
+| `enqueue(vehicle)` | void | Queue | Adds vehicle to queue |
+| `dequeue()` | Vehicle | Queue | Removes front vehicle |
+| `peek()` / `front()` | Vehicle | Queue | View next vehicle |
+| `isEmpty()` | bool | Queue | Check if empty |
+| `size()` | int | Queue | Count vehicles |
+| `display()` | void | Queue | Print all vehicles |
+| `processTraffic()` | void | Queue + Loop | Main traffic simulation logic |
+| `loadVehicles()` | void | Queue | Initialize traffic |
+
+## 🚦 Algorithm for Traffic Processing
+Function processTraffic()
+
+while simulation not complete
+
+for each laneQueue
+
+if laneQueue is not empty
+
+frontVehicle = laneQueue.peek()
+
+if signal allows move
+
+laneQueue.dequeue()
+
+recordPassedVehicle(frontVehicle)
+
+end if
+
+end if
+
+end for
+
+updateSignals()
+
+displayState()
+
+end while
+
+end function
+
 
 
 
