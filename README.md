@@ -1,8 +1,20 @@
-Assignment: One 
+Assignment Information
 
-Name: Prayash Bhattarai 
+Assignment Number: Assignment 1 - Queue Data Structure Implementation
 
-Rollno: 15 
+Course: Data Structures and Algorithms
+
+Student Name: Prayash BHattarai 
+
+Roll Number: 15
+
+Semester: 3rd semester
+
+Date of Submission: December 28, 2025
+
+Institution: Kathmandu University
+
+
 
 ## Traffic Junction Stimulation 
 
@@ -10,11 +22,16 @@ This project simulates traffic movement at an intersection using C++. The simula
 
 ## Program output 
 
-![demo](https://github.com/user-attachments/assets/7a60f9bb-f57c-4951-a0e7-fad8209d8ce8)
+![demo](https://github.com/user-attachments/assets/6027c4ec-cd8d-4ddd-8e24-0dd8dba59deb)
+
 
 ## Program structure 
 
-![program structure ](https://github.com/user-attachments/assets/b1259a8f-55f9-4707-abd5-e0a8b2d10519)
+
+![program structure ](https://github.com/user-attachments/assets/aa747677-7263-4617-a5d1-9112fa8d8b13)
+
+
+
 
 ## Prerequisites
 
@@ -182,22 +199,126 @@ d. Orange-Red: Fire trucks
 4. Use the close button (X) to exit the simulationControls 
 
 
-## 🚦 Algorithm for Traffic Processing
+
+---
+
+## Detailed Algorithm
+
+   ### 1. Initialize the Simulation
+
+      - Include necessary headers for `Queue`, `Vehicle`, and `LaneQueue`.
+  
+      - Initialize individual lane queues for each traffic lane.
+  
+      - Set traffic light signals and simulation parameters (window size, lane width, etc.).
+  
+
+   ### 2. Vehicle Insertion
+
+      - For each lane, create `Vehicle` objects with attributes like ID, speed, and arrival time.
+  
+      - Use `enqueue()` to add vehicles to the corresponding lane queue.
+  
+      - Maintain FIFO order to simulate real-world traffic arrival.
+  
+
+   ### 3. Traffic Signal Processing
+
+      - Continuously check traffic light states for each lane.
+  
+      - Allow vehicles at green signals to move while holding vehicles at red signals.
+  
+
+   ### 4. Vehicle Movement
+
+      - For each lane:
+  
+        - If the traffic signal is green, dequeue the front vehicle using `dequeue()`.
+    
+        - Update vehicle position and simulation visualization.
+    
+        - If lane queue becomes empty, wait for next vehicle insertion.
+    
+
+   ### 5. Congestion Handling
+
+      - Monitor queue size for each lane.
+  
+      - Implement overflow checks to prevent exceeding `MAX_VEHICLES`.
+  
+      - Reuse memory efficiently for departed vehicles (circular queue logic).
+  
+
+   ### 6. Simulation Loop
+
+      - Repeat the above steps in a loop until the simulation ends or user exits.
+  
+      - Update graphical visualization and lane states in real-time.
+  
+      - Ensure each core queue operation (enqueue, dequeue, front access) runs in constant time, O(1).
+  
+
+   ### 7. Termination
+
+      -  End simulation gracefully.
+  
+      - Clear all queues and release allocated memory.
+  
+      - Optionally, display statistics such as vehicles passed and congestion level.
+  
+
+ ## Implementation Details
+
+   ### Queue Data Structure
+  
+      typedef struct Node {
+      
+       Vehicle vehicle;
+       
+       struct Node* next;
+       
+      } Node;
+
+      typedef struct {
+      
+       Node* front;
+       
+       Node* rear;
+       
+       int size;
+       
+      } Queue;
+      
+      ```
+
+   ### Vehicle States
+
+      typedef enum {
+      
+       STATE_MOVING,
+       
+       STATE_STOPPING,
+       
+       STATE_STOPPED,
+       
+       STATE_TURNING
+       
+      } VehicleState;
 
 
-The simulator follows a **Circular Queue Logic** to manage traffic flow:
+### Special Traffic Rules
 
-1. **Vehicle Arrival (Enqueue):** - New vehicles are added to the `rear` of the queue.
+The simulation implements realistic traffic rules including:
+
+1. **Emergency Vehicle Priority**: Ambulances, police cars, and fire trucks automatically trigger green lights and can bypass red lights.
    
-   - Circular logic: `rear = (rear + 1) % capacity`.
-     
-2. **Vehicle Departure (Dequeue):** - Vehicles exit from the `front` when the traffic signal is "Green".
+2. **Right Turn on Red**: Vehicles turning right can generally proceed even when the light is red (as in many real-world jurisdictions).
    
-   - Circular logic: `front = (front + 1) % capacity`.
-     
-3. **Overflow Management:** - If `(rear + 1) % capacity == front`, the system signals a traffic jam (Queue Full).
+3. **Congestion Management**: If a lane becomes congested (more than 5 vehicles), the system prioritizes that lane.
    
-4. **Underflow Management:** - If `front == -1`, the lane is empty and no processing occurs.
+4. **Wait Time Management**: Regular vehicles that have been waiting too long at a red light may eventually proceed (simulating real-world driver behavior).
+
+
 
 ## Source Codes 
 
