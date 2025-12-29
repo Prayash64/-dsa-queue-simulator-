@@ -25,13 +25,6 @@ This project simulates traffic movement at an intersection using C++. The simula
 ![demo](https://github.com/user-attachments/assets/6027c4ec-cd8d-4ddd-8e24-0dd8dba59deb)
 
 
-## Program structure 
-
-
-![program structure ](https://github.com/user-attachments/assets/aa747677-7263-4617-a5d1-9112fa8d8b13)
-
-
-
 
 ## Prerequisites
 
