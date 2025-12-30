@@ -4,7 +4,7 @@ Assignment Number: Assignment 1 - Queue Data Structure Implementation
 
 Course: Data Structures and Algorithms
 
-Student Name: Prayash BHattarai 
+Student Name: Prayash Bhattarai 
 
 Roll Number: 15
 
@@ -23,6 +23,60 @@ This project simulates traffic movement at an intersection using C++. The simula
 ## Program output 
 
 ![demo](https://github.com/user-attachments/assets/6027c4ec-cd8d-4ddd-8e24-0dd8dba59deb)
+
+
+
+Project Structure 
+
+├── .vscodes/                     # VS Code settings
+
+├── bin/                         # Compiled executables (optional folder)
+
+├── include/                     # Header files
+
+│   ├── Queue.hpp                # Abstract/base interface for queue
+
+│   ├── LaneQueue.hpp            # Specialized queue for traffic lanes
+
+│   ├── vehicle.hpp              # Vehicle class definitions
+
+│   └── vehicleQueue.hpp         # Queue for vehicles
+
+├── lib/                         #  libraries 
+
+├── src/                         # Source files and main logic
+
+│   ├── Queue.cpp                # Queue implementation
+
+│   ├── vehicle.cpp              # Vehicle implementation
+
+│   └── vehicleQueue.cpp         # Vehicle queue implementation
+
+├── testqueue.cpp                # Test cases for queue behavior
+
+├── Queue.cpp                    # Core implementation
+
+├── Queue.hpp                    # Queue interface
+
+├── LaneQueue.hpp                # Lane queue logic
+
+├── vehicle.cpp                  # Vehicle properties and functions
+
+├── vehicle.hpp                  # Vehicle class header
+
+├── vehicleQueue.cpp             # Vehicle queue implementation
+
+├── vehicleQueue.hpp             # Vehicle queue header
+
+├── sdl2-config                  # SDL2 configuration script
+
+├── demo.gif                     # Demo visuals showing simulation
+
+├── README.md                    # Project overview and setup
+
+├── .gitignore                   # Files ignored by git
+
+└── .gitattributes               # Git attribute configuration
 
 
 
